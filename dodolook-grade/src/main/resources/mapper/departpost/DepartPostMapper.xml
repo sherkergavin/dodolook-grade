@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="dodo.look.grade.mapper.security.DepartPostMapper">
+	
+		
+		<select id="count" resultType="java.lang.Integer">
+		
+			SELECT 
+				group_id 
+			FROM 
+				t_auth_group 
+			WHERE 
+				depart_id = #{departPost.departId}
+				AND 
+				post_id = #{departPost.postId}
+				AND
+				is_delete = 0
+				OR
+				is_delete is NULL
+		</select>
+	
+		<insert id="add" useGeneratedKeys="true" keyProperty="departPost.groupId">
+			
+			INSERT INTO 
+				t_auth_group
+				(
+					create_time,
+					depart_id,
+					post_id
+				)
+				VALUES
+            	(
+            		#{departPost.createTime},
+            		#{departPost.departId},
+            		#{departPost.postId}
+            	)
+		</insert>
+	
+	
+	
+	</mapper>

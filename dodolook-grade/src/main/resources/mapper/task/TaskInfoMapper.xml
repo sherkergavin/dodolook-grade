@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="dodo.look.grade.mapper.task.TaskInfoMapper">
+	
+		<select id="selAll" resultType="dodo.look.grade.pojo.task.TaskInfo">
+			
+			SELECT
+				task_id as 'taskId',
+				task_creator as 'taskCreator',
+				owner_id as 'ownerId',
+				create_time as 'createTime',
+				update_time as 'updateTime',
+				task_title as 'taskTitle',
+				task_content as 'taskContent',
+				task_start as 'taskStart',
+				task_cycle as 'taskCycle',
+				task_status as 'taskStatus'
+			FROM
+				t_task_info
+			WHERE
+				is_delete is NULL
+				OR
+				is_delete = 0
+		
+		</select>
+	
+	
+	
+	</mapper>

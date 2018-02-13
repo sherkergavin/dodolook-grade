@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="dodo.look.grade.mapper.security.LoginMapper">
+	
+	
+		<insert id='add'>
+		
+			INSERT INTO
+				t_auth_login
+				(
+					login_name,
+					login_pwd,
+					encode_pwd,
+					salt,
+					owner_id
+				)VALUES
+				<foreach collection="list" item="item" separator=",">  
+            	(
+            		#{item.loginName},
+            		#{item.loginPwd},
+            		#{item.encodePwd},
+            		#{item.salt},
+            		#{item.ownerId}
+            	)  
+         		</foreach>  
+		</insert>
+	
+		
+		<update id="del">
+		
+			UPDATE
+				t_auth_login
+			SET
+				is_delete = 1
+			WHERE
+				owner_id in
+				<foreach item="item" collection="ownIds" open="(" separator="," close=")">  
+				  #{item}  
+				</foreach> 
+		</update>
+		
+	
+		<update id="updLoginName">
+			UPDATE
+				t_auth_login
+			SET
+				login_name = #{owner.loginName}
+			WHERE
+				owner_id = #{owner.ownerId}
+		</update>
+		
+	
+	
+	</mapper>

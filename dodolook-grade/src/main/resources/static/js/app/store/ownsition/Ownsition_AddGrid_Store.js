@@ -1,0 +1,15 @@
+Ext.define('gwj.store.ownsition.Ownsition_AddGrid_Store',{
+		extend:'Ext.data.Store',
+		alias:'widget.ownsition_AddGrid_Store',
+		storeId:'ownsition_AddGrid_Store',
+		fields:[
+			{name:'ownerId',type:'string'},
+			{name:'loginId',type:'string'},
+			{name:'loginName',type:'string'},
+			{name:'ownerName',type:'string'},
+			{name:'departId',type:'string'},
+			{name:'departName',type:'string'},
+			{name:'postId',type:'string'},
+			{name:'postName',type:'string'}
+		]	
+});

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="dodo.look.grade.mapper.menu.MenuMapper">
+	
+		<select id="selAll" resultType="dodo.look.grade.pojo.menu.Menu">
+								
+				select
+					menu_id as 'id',
+					parent_id as 'parentId',
+					text as 'text',
+					menu_lev as 'level',
+					is_leaf as 'leaf',
+					is_expanded as 'expanded',
+					href_target as 'hrefTarget'
+				from	
+					t_stand_menu
+		</select>
+	
+	
+	</mapper>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="dodo.look.grade.mapper.stand.DepartmentMapper">
+	
+		
+		<insert id="add">
+			
+			INSERT INTO 
+				t_stand_department
+				(
+					depart_name,
+					create_time
+				)
+				VALUES
+				<foreach collection="list" item="item" separator=",">  
+            	(
+            		#{item.colName},
+            		#{item.createTime}
+            	)  
+         		</foreach>  
+		</insert>
+		
+		
+		<select id="selComAll" resultType="dodo.look.grade.pojo.stand.DeposBean">
+			
+			SELECT
+				depart_id as 'colId',
+				depart_name as 'colName'
+			FROM
+				t_stand_department
+			WHERE
+				is_delete is null
+				or
+				is_delete = 0
+			ORDER BY
+				create_time asc	
+		</select>
+		
+
+		<select id="selAll" resultType="dodo.look.grade.pojo.stand.Department">
+						
+			SELECT
+				depart_id as 'departId',
+				depart_name as 'departName'
+			FROM
+				t_stand_department
+			WHERE
+				is_delete is null
+				or
+				is_delete = 0
+			ORDER BY
+				create_time asc	
+		</select>
+	
+	</mapper>

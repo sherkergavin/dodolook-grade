@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<configuration debug="true">
+	<contextName>dodolook-grade</contextName>
+	<property name="LOG_HOME" value="d:/dodolook-GWJ-log"/>
+	
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} GWJ-GRADE [%thread] %5level %logger{50} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>${LOG_HOME}/grade/dodolook-gwj-grade.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} FILE [%thread] %5level %logger{50} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	
+	<appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<append>true</append>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/grade/dodolook-gwj-grade-%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} RollingFile [%thread] %5level %logger{50} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<!--打印级别(从低到高):===> TRACE, DEBUG, INFO, WARN, ERROR, ALL -->
+	<logger name="org.apache.ibatis" level="DEBUG" additivity="true"/>  
+    <logger name="java.sql.Connection" level="DEBUG" additivity="true"/>  
+    <logger name="java.sql.Statement" level="DEBUG" additivity="true"/>  
+    <logger name="java.sql.PreparedStatement" level="DEBUG" additivity="true"/>
+	
+	<root level="INFO">
+		<appender-ref ref="STDOUT"/>
+		<appender-ref ref="FILE"/>
+		<appender-ref ref="RollingFile"/>
+	</root>
+	
+</configuration>

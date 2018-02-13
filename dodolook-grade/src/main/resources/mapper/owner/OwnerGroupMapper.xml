@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="dodo.look.grade.mapper.security.OwnerGroupMapper">
+	
+	
+		<insert id="add">
+			
+			INSERT INTO 
+				t_auth_login_group
+				(
+					create_time,
+					group_id,
+					login_id					
+				)
+				VALUES
+				<foreach collection="list" item="item" separator=",">  
+            	(
+            		#{createTime},
+            		#{groupId},
+            		#{item}
+            	)  
+         		</foreach>  
+		</insert>
+	
+	
+		<select id="selAll" resultType="dodo.look.grade.pojo.ownsition.OwnerGroup">
+			
+			SELECT 
+					lg.logup_id as 'logupId',
+					lg.group_id as 'groupId',
+					concat(d.depart_name,' ',p.post_name) as 'groupName',
+					lg.login_id as 'loginId',
+					l.login_name as 'loginName',
+					o.owner_name as 'ownerName',
+					o.work_num as 'workNum',
+					d.depart_id as 'departId',
+					d.depart_name as 'departName',
+					p.post_id as 'postId',
+					p.post_name as 'postName'
+			FROM 
+				t_auth_login_group lg
+			LEFT JOIN 
+				t_auth_group g
+				ON 
+				lg.group_id = g.group_id
+			LEFT JOIN 
+				t_stand_department d
+				ON 
+				d.depart_id = g.depart_id
+			LEFT JOIN 
+				t_stand_position p
+				ON	
+				p.post_id = g.post_id
+			LEFT JOIN 
+				t_auth_login l
+				ON 
+				l.login_id = lg.login_id
+			LEFT JOIN
+				t_stand_owner o
+				ON	
+				o.owner_id = l.owner_id
+			WHERE
+				lg.is_delete = 0
+				OR
+				lg.is_delete is NULL
+				AND
+				l.is_delete = 0
+				OR
+				l.is_delete is NULL
+				AND
+				o.is_delete = 0
+				OR
+				o.is_delete is NULL
+				AND
+				g.is_delete = 0
+				OR
+				g.is_delete is NULL
+				AND
+				d.is_delete = 0
+				OR
+				d.is_delete is NULL
+				AND
+				p.is_delete = 0
+				OR
+				p.is_delete is NULL
+			ORDER BY
+				lg.create_time ASC
+		</select>
+	
+		<update id="delGroup">
+			
+			UPDATE
+				t_auth_login_group
+			SET
+				is_delete = 1
+			WHERE
+				group_id = #{groupId}
+		</update>
+	
+		<update id="delsingle">
+			UPDATE
+				t_auth_login_group
+			SET
+				is_delete = 1
+			WHERE
+				logup_id = #{logupId}
+				AND
+				group_id = #{groupId}
+				AND
+				login_id = #{loginId}
+		</update>
+	
+	
+	
+	
+	</mapper>

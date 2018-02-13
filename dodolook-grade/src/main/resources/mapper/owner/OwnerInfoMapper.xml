@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="dodo.look.grade.mapper.owner.OwnerInfoMapper">
+	
+		<select id="selAll" resultType="dodo.look.grade.pojo.owner.OwnerInfo">
+			
+			SELECT 
+				o.owner_id as 'ownerId',
+				o.create_time as 'createTime',
+				o.owner_name as 'ownerName',
+				o.work_num as 'workNum',
+				l.login_id as 'loginId',
+				l.login_name as 'loginName'
+			FROM
+				t_stand_owner o
+				LEFT JOIN
+				t_auth_login l
+				ON  o.owner_id = l.owner_id
+			WHERE
+				o.is_delete is null
+				or
+				o.is_delete = 0
+			ORDER BY
+				o.create_time asc	
+		</select>
+	
+		
+		<update id="del">
+		
+			UPDATE
+				t_stand_owner
+			SET
+				is_delete = 1
+			WHERE
+				owner_id in
+				<foreach item="item" collection="ownIds" open="(" separator="," close=")">  
+				  #{item}  
+				</foreach> 
+		</update>
+		
+		
+		<insert id="add" useGeneratedKeys="true" keyProperty="ownerId">
+			
+			INSERT INTO 
+				t_stand_owner
+				(
+					create_time,
+					owner_name,
+					work_num
+				)
+				VALUES
+				<foreach collection="list" item="item" separator=",">  
+            	(
+            		#{item.createTime},
+            		#{item.ownerName},
+            		#{item.workNum}
+            	)  
+         		</foreach>  
+		</insert>
+	
+	
+		<update id="upd">
+			UPDATE
+				t_stand_owner
+			SET
+				owner_name = #{owner.ownerName},
+				work_num = #{owner.workNum}
+			WHERE
+				owner_id = #{owner.ownerId}
+		</update>
+	
+	
+	
+	</mapper>

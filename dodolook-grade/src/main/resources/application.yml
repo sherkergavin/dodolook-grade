@@ -1,0 +1,26 @@
+server:
+  port: 8801
+  context-path: /grade
+  servlet-path: /
+  
+spring:
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: true
+          paths: /**
+        fixed:
+          enabled: true
+          paths: /app/
+          version: js
+  thymeleaf:
+    mode: HTML5
+    encoding: UTF-8
+    content-type: text/html; charset=utf-8
+    cache: false 
+  application:
+    name: dodolook-grade
+  
+  
+  
